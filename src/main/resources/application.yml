@@ -1,0 +1,37 @@
+
+services:
+  community-db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: communitydb
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - community-db-data:/var/lib/mysql
+    networks:
+      - community-network
+
+  community-api:
+    build: .
+    ports:
+      - "8081:8081"
+    depends_on:
+      - community-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://community-db:3306/communitydb
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update  # Hibernate 설정 (필요 시 변경)
+      SPRING_FLYWAY_ENABLED: true           # Flyway 활성화
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: rootpassword
+    networks:
+      - community-network
+
+networks:
+  community-network:
+    driver: bridge
+
+volumes:
+  community-db-data:
+
+
