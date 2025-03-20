@@ -93,7 +93,6 @@ services:
     build:
       context: "./logstash/"
       dockerfile: Dockerfile
-    platform: linux/amd64  # 플랫폼 명시
     volumes:
       - type: bind
         source: "./logstash/config/logstash.yml"
@@ -118,7 +117,6 @@ services:
     build:
       context: "./kibana/"
       dockerfile: Dockerfile
-    platform: linux/amd64  # 플랫폼 명시
     volumes:
       - type: bind
         source: "./kibana/config/kibana.yml"
