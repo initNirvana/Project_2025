@@ -54,13 +54,15 @@ dependencies {
     implementation 'io.github.openfeign:feign-okhttp:13.0'
     implementation 'io.github.openfeign.form:feign-form:3.8.0'
 
+    implementation "com.h2database:h2"
+
     implementation 'com.opencsv:opencsv:5.6'
 
     implementation 'org.springframework.retry:spring-retry'
 
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'com.mysql:mysql-connector-j'
+    implementation 'com.mysql:mysql-connector-j'
 
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'

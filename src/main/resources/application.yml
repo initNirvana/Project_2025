@@ -1,37 +1,54 @@
+server:
+  port: 8081  # Spring Boot 애플리케이션 실행 포트
 
-services:
-  community-db:
-    image: mysql:8.0
-    environment:
-      MYSQL_DATABASE: communitydb
-      MYSQL_ROOT_PASSWORD: rootpassword
-    ports:
-      - "3306:3306"
-    volumes:
-      - community-db-data:/var/lib/mysql
-    networks:
-      - community-network
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/communitydb  # 로컬 MySQL 서버 주소
+    username: root  # MySQL 사용자 이름
+    password: rootpassword  # MySQL 비밀번호
+    driver-class-name: com.mysql.cj.jdbc.Driver  # MySQL 드라이버 클래스
+  jpa:
+    hibernate:
+      ddl-auto: none  # Flyway를 사용할 경우 Hibernate는 테이블 자동 생성하지 않음
+    show-sql: true  # SQL 쿼리 로그 활성화
 
-  community-api:
-    build: .
-    ports:
-      - "8081:8081"
-    depends_on:
-      - community-db
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://community-db:3306/communitydb
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update  # Hibernate 설정 (필요 시 변경)
-      SPRING_FLYWAY_ENABLED: true           # Flyway 활성화
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: rootpassword
-    networks:
-      - community-network
+flyway:
+  enabled: true  # Flyway 활성화
+  baseline-on-migrate: true  # 기존 스키마를 기준으로 마이그레이션 시작
+  locations: classpath:/db/migration  # 마이그레이션 파일 경로
 
-networks:
-  community-network:
-    driver: bridge
 
-volumes:
-  community-db-data:
-
+#  services:
+#    community-db:
+#      image: mysql:8.0
+#      environment:
+#        MYSQL_DATABASE: communitydb
+#        MYSQL_ROOT_PASSWORD: rootpassword
+#      ports:
+#        - "3306:3306"
+#      volumes:
+#        - community-db-data:/var/lib/mysql
+#      networks:
+#        - community-network
+#
+#    community-api:
+#      build: .
+#      ports:
+#        - "8081:8081"
+#      depends_on:
+#        - community-db
+#      environment:
+#        SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/communitydb
+#        SPRING_JPA_HIBERNATE_DDL_AUTO: update  # Hibernate 설정 (필요 시 변경)
+#        SPRING_DATASOURCE_USERNAME: root
+#        SPRING_DATASOURCE_PASSWORD: rootpassword
+#      networks:
+#        - community-network
+#
+#  networks:
+#    community-network:
+#      driver: bridge
+#
+#  volumes:
+#    community-db-data:
 

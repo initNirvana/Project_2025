@@ -1,3 +1,5 @@
+version: "3.8"
+
 services:
   community-db:
     image: mysql:8.0
@@ -5,7 +7,7 @@ services:
       MYSQL_DATABASE: communitydb
       MYSQL_ROOT_PASSWORD: rootpassword
     ports:
-      - "3307:3306"  # 로컬 머신의 외부 포트를 3307로 변경 (필요 시)
+      - "3306:3306"  # 로컬 머신의 외부 포트를 3307로 변경 (필요 시)
     volumes:
       - community-db-data:/var/lib/mysql
     networks:
@@ -23,11 +25,12 @@ services:
     depends_on:
       - community-db
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://community-db:3306/communitydb
+      #      SPRING_DATASOURCE_URL: jdbc:mysql://community-db:3306/communitydb
+      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/communitydb
       SPRING_JPA_HIBERNATE_DDL_AUTO: update  # Hibernate 설정 (필요 시 변경)
-      SPRING_FLYWAY_ENABLED: true           # Flyway 활성화
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: rootpassword
+      SPRING_DEVTOOLS_LIVERELOAD_ENABLED: "true"  # DevTools LiveReload 활성화
     networks:
       - community-network
 
