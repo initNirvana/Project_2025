@@ -12,10 +12,10 @@ spring:
       ddl-auto: none  # Flyway를 사용할 경우 Hibernate는 테이블 자동 생성하지 않음
     show-sql: true  # SQL 쿼리 로그 활성화
 
-flyway:
-  enabled: true  # Flyway 활성화
-  baseline-on-migrate: true  # 기존 스키마를 기준으로 마이그레이션 시작
-  locations: classpath:/db/migration  # 마이그레이션 파일 경로
+  flyway:
+    enabled: true  # Flyway 활성화
+    baseline-on-migrate: true  # 기존 스키마를 기준으로 마이그레이션 시작
+    locations: classpath:/db/migration  # 마이그레이션 파일 경로
 
 
 #  services:
